@@ -17,5 +17,9 @@ namespace Proiect_Cinema_Cozma_Marian.Data
         public DbSet<Proiect_Cinema_Cozma_Marian.Models.Movie> Movie { get; set; } = default!;
 
         public DbSet<Proiect_Cinema_Cozma_Marian.Models.Genre> Genre { get; set; }
+
+        public DbSet<Proiect_Cinema_Cozma_Marian.Models.Member> Member { get; set; }
+
+        public DbSet<Proiect_Cinema_Cozma_Marian.Models.Booking> Booking { get; set; }
     }
 }

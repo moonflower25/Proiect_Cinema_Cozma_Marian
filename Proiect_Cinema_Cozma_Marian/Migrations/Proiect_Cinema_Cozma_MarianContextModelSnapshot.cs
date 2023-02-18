@@ -17,10 +17,38 @@ namespace Proiect_Cinema_Cozma_Marian.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.13")
+                .HasAnnotation("ProductVersion", "6.0.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("Proiect_Cinema_Cozma_Marian.Models.Booking", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<DateTime>("BookingDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("MemberID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MovieID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("MemberID");
+
+                    b.HasIndex("MovieID")
+                        .IsUnique()
+                        .HasFilter("[MovieID] IS NOT NULL");
+
+                    b.ToTable("Booking");
+                });
 
             modelBuilder.Entity("Proiect_Cinema_Cozma_Marian.Models.Genre", b =>
                 {
@@ -37,6 +65,35 @@ namespace Proiect_Cinema_Cozma_Marian.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Genre");
+                });
+
+            modelBuilder.Entity("Proiect_Cinema_Cozma_Marian.Models.Member", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<string>("Adress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Member");
                 });
 
             modelBuilder.Entity("Proiect_Cinema_Cozma_Marian.Models.Movie", b =>
@@ -94,6 +151,21 @@ namespace Proiect_Cinema_Cozma_Marian.Migrations
                     b.ToTable("MovieGenre");
                 });
 
+            modelBuilder.Entity("Proiect_Cinema_Cozma_Marian.Models.Booking", b =>
+                {
+                    b.HasOne("Proiect_Cinema_Cozma_Marian.Models.Member", "Member")
+                        .WithMany("Bookings")
+                        .HasForeignKey("MemberID");
+
+                    b.HasOne("Proiect_Cinema_Cozma_Marian.Models.Movie", "Movie")
+                        .WithOne("Booking")
+                        .HasForeignKey("Proiect_Cinema_Cozma_Marian.Models.Booking", "MovieID");
+
+                    b.Navigation("Member");
+
+                    b.Navigation("Movie");
+                });
+
             modelBuilder.Entity("Proiect_Cinema_Cozma_Marian.Models.MovieGenre", b =>
                 {
                     b.HasOne("Proiect_Cinema_Cozma_Marian.Models.Genre", "Genre")
@@ -118,8 +190,15 @@ namespace Proiect_Cinema_Cozma_Marian.Migrations
                     b.Navigation("MovieGenres");
                 });
 
+            modelBuilder.Entity("Proiect_Cinema_Cozma_Marian.Models.Member", b =>
+                {
+                    b.Navigation("Bookings");
+                });
+
             modelBuilder.Entity("Proiect_Cinema_Cozma_Marian.Models.Movie", b =>
                 {
+                    b.Navigation("Booking");
+
                     b.Navigation("MovieGenres");
                 });
 #pragma warning restore 612, 618

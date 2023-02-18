@@ -1,12 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Proiect_Cinema_Cozma_Marian.Data;
+using Microsoft.AspNetCore.Identity;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<Proiect_Cinema_Cozma_MarianContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Proiect_Cinema_Cozma_MarianContext") ?? throw new InvalidOperationException("Connection string 'Proiect_Cinema_Cozma_MarianContext' not found.")));
+
+builder.Services.AddDbContext<CinemaIdentityContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Proiect_Cinema_Cozma_MarianContext") ?? throw new InvalidOperationException("Connection string 'Proiect_Cinema_Cozma_MarianContext' not found.")));
+
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<CinemaIdentityContext>();
 
 var app = builder.Build();
 
@@ -22,6 +29,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();;
 
 app.UseAuthorization();
 

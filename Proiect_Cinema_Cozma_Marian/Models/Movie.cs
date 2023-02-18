@@ -23,5 +23,7 @@ namespace Proiect_Cinema_Cozma_Marian.Models
 
         public ICollection<MovieGenre>? MovieGenres { get; set; }
 
+        public Booking? Booking { get; set; }
+
     }
 }
