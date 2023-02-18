@@ -39,7 +39,7 @@ namespace Proiect_Cinema_Cozma_Marian.Pages.Movies
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync(string[] selectedGenres)
         {
-            var newMovie = new Movie();
+            var newMovie = Movie;
             if (selectedGenres != null)
             {
                 newMovie.MovieGenres = new List<MovieGenre>();
@@ -53,13 +53,15 @@ namespace Proiect_Cinema_Cozma_Marian.Pages.Movies
                 }
             }
 
-            if (await TryUpdateModelAsync<Movie>(newMovie, "Movie",
-            i => i.Title, i => i.Director, i => i.Actor1, i => i.Actor2, i => i.ReleaseDate))
-            {
-                _context.Movie.Add(newMovie);
-                await _context.SaveChangesAsync();
-                return RedirectToPage("./Index");
-            }
+            /* if (await TryUpdateModelAsync<Movie>(
+                 newMovie,
+                 "Movie",
+                 i => i.Title, i => i.Director, i => i.Actor1, i => i.Actor2, i => i.ReleaseDate))
+             {*/
+            _context.Movie.Add(newMovie);
+            await _context.SaveChangesAsync();
+            return RedirectToPage("./Index");
+            //}
             PopulateAssignedGenreData(_context, newMovie);
             return Page();
         }
