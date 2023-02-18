@@ -130,9 +130,12 @@ namespace Proiect_Cinema_Cozma_Marian.Areas.Identity.Pages.Account
             Member.Email = Input.Email;
             _context.Member.Add(Member);
             await _context.SaveChangesAsync();
+
             if (result.Succeeded)
             {
                 _logger.LogInformation("User created a new account with password.");
+
+                var role = await _userManager.AddToRoleAsync(user, "User");
 
                 var userId = await _userManager.GetUserIdAsync(user);
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
