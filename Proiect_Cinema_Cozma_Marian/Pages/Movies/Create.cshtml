@@ -18,10 +18,11 @@
                 <input asp-for="Movie.Title" class="form-control" />
                 <span asp-validation-for="Movie.Title" class="text-danger"></span>
             </div>
+            
             <div class="form-group">
                 <label asp-for="Movie.Director" class="control-label"></label>
                 <input asp-for="Movie.Director" class="form-control" />
-                <span asp-validation-for="Movie.Director" class="text-danger"></span>
+                <span asp-validation-for="Movie.Director" class="textdanger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Movie.Actor1" class="control-label"></label>
@@ -38,6 +39,8 @@
                 <input asp-for="Movie.ReleaseDate" class="form-control" />
                 <span asp-validation-for="Movie.ReleaseDate" class="text-danger"></span>
             </div>
+
+
             <div class="form-group">
                 <div class="table">
                     <table>
@@ -56,7 +59,6 @@
                                                name="selectedGenres"
                                                value="@gen.GenreID"
                                                @(Html.Raw(gen.Assigned ? "checked=\"checked\"" : "")) />
-                                        
                                         @gen.GenreID @: @gen.Name
                                     @:</td>
                                 }

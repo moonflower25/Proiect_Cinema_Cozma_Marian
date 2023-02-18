@@ -43,7 +43,6 @@ namespace Proiect_Cinema_Cozma_Marian.Pages.Movies
             if (selectedGenres != null)
             {
                 newMovie.MovieGenres = new List<MovieGenre>();
-
                 foreach (var gen in selectedGenres)
                 {
                     var genToAdd = new MovieGenre
@@ -62,9 +61,7 @@ namespace Proiect_Cinema_Cozma_Marian.Pages.Movies
                 return RedirectToPage("./Index");
             }
             PopulateAssignedGenreData(_context, newMovie);
-
             return Page();
         }
-
     }
 }
